@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOGISTOK - Form Pengambilan Barang</title>
+    <link rel="icon" type="image/png" href="LOGISTOK.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bs-primary: #006D77;
+            --bs-primary-rgb: 0, 109, 119;
+            --primary-dark: #006D77;
+            --primary-light: #83C5BE;
+            --background: #EDF6F9;
+            --accent-light: #FFDDD2;
+            --accent-dark: #E29578;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--background) 0%, #F8FAFC 100%);
+            color: var(--primary-dark);
+            padding-top: 80px;
+        }
+
+        /* Override Bootstrap primary colors */
+        .btn-primary {
+            --bs-btn-bg: var(--primary-dark);
+            --bs-btn-border-color: var(--primary-dark);
+            --bs-btn-hover-bg: var(--primary-light);
+            --bs-btn-hover-border-color: var(--primary-light);
+            --bs-btn-active-bg: var(--primary-light);
+            --bs-btn-active-border-color: var(--primary-light);
+        }
+
+        .btn-outline-primary {
+            --bs-btn-color: var(--primary-dark);
+            --bs-btn-border-color: var(--primary-light);
+            --bs-btn-hover-bg: var(--primary-light);
+            --bs-btn-hover-border-color: var(--primary-light);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 0.25rem rgba(131, 197, 190, 0.25);
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-light) 100%);
+            box-shadow: 0 4px 12px rgba(0, 109, 119, 0.15);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1030;
+            padding: 0.75rem 0;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white !important;
+            text-decoration: none;
+        }
+
+        .navbar-subtitle {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-left: 2.3rem;
+            font-weight: 400;
+            margin-top: -0.5rem;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-weight: 500;
+            padding: 0.5rem 1rem !important;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--accent-light) !important;
+        }
+
+        .nav-link.active {
+            background: linear-gradient(135deg, var(--accent-light), var(--accent-dark));
+            color: var(--primary-dark) !important;
+            font-weight: 600;
+        }
+
+        /* Header Styles */
+        .header-section {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-light) 100%);
+            padding: 80px 0 120px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-title {
+            font-size: 3rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .header-subtitle {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 400;
+        }
+
+        .header-icon {
+            font-size: 4rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+        }
+
+        /* Main Container */
+        .main-container {
+            position: relative;
+            z-index: 10;
+            margin-top: -60px;
+        }
+
+        .form-card {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 20px 25px -5px rgba(0, 109, 119, 0.1);
+            border: 1px solid rgba(131, 197, 190, 0.1);
+            overflow: visible; /* Important for dropdowns */
+        }
+
+        .form-header {
+            background: linear-gradient(135deg, var(--background) 0%, white 100%);
+            padding: 2.5rem 2rem;
+            border-bottom: 1px solid rgba(131, 197, 190, 0.1);
+            text-align: center;
+            border-radius: 24px 24px 0 0;
+        }
+
+        .form-section {
+            padding: 1.5rem 2rem;
+            position: relative;
+            overflow: visible; /* Important for dropdowns */
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid rgba(131, 197, 190, 0.1);
+        }
+
+        .section-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary-light), var(--primary-dark));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: white;
+            font-size: 1.1rem;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin: 0;
+        }
+
+        /* Custom Dropdown Styles - Bootstrap Compatible */
+        .custom-dropdown {
+            position: relative;
+        }
+
+        .custom-dropdown .form-control {
+            cursor: pointer;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23006D77' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m1 6 7 7 7-7'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 16px 12px;
+            padding-right: 2.5rem;
+        }
+
+        .custom-dropdown.show .form-control {
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 0.25rem rgba(131, 197, 190, 0.25);
+        }
+
+        /* Dropdown Menu - Using Bootstrap's z-index system */
+        .custom-dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            z-index: 1000; /* Bootstrap dropdown z-index */
+            display: none;
+            min-width: 100%;
+            padding: 0.5rem 0;
+            margin: 0.125rem 0 0;
+            font-size: 0.95rem;
+            color: var(--primary-dark);
+            text-align: left;
+            background-color: white;
+            background-clip: padding-box;
+            border: 2px solid var(--primary-light);
+            border-radius: 12px;
+            box-shadow: 0 0.5rem 1rem rgba(0, 109, 119, 0.175);
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        .custom-dropdown.show .custom-dropdown-menu {
+            display: block;
+        }
+
+        .custom-dropdown-item {
+            display: block;
+            width: 100%;
+            padding: 0.75rem 1rem;
+            clear: both;
+            font-weight: 400;
+            color: var(--primary-dark);
+            text-align: inherit;
+            text-decoration: none;
+            white-space: nowrap;
+            background-color: transparent;
+            border: 0;
+            cursor: pointer;
+            transition: all 0.15s ease-in-out;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+        }
+
+        .custom-dropdown-item:hover,
+        .custom-dropdown-item:focus,
+        .custom-dropdown-item.active {
+            color: white;
+            background-color: var(--primary-light);
+            transform: translateX(4px);
+        }
+
+        .dropdown-item-icon {
+            margin-right: 0.75rem;
+            color: var(--primary-light);
+            font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .dropdown-item-text {
+            flex: 1;
+            font-weight: 500;
+        }
+
+        .dropdown-item-info {
+            margin-left: auto;
+            flex-shrink: 0;
+        }
+
+        .dropdown-item-text .highlight {
+            background: linear-gradient(135deg, var(--accent-light), var(--accent-dark));
+            padding: 0.1rem 0.3rem;
+            border-radius: 4px;
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+
+        /* Stock Badges */
+        .stock-badge {
+            padding: 0.2rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .stock-badge.high {
+            background: rgba(131, 197, 190, 0.2);
+            color: var(--primary-dark);
+            border: 1px solid var(--primary-light);
+        }
+
+        .stock-badge.medium {
+            background: rgba(255, 221, 210, 0.8);
+            color: var(--accent-dark);
+            border: 1px solid var(--accent-dark);
+        }
+
+        .stock-badge.low {
+            background: rgba(226, 149, 120, 0.2);
+            color: var(--accent-dark);
+            border: 1px solid var(--accent-dark);
+        }
+
+        /* Items List */
+        .items-list-card {
+            background: var(--background);
+            border-radius: 12px;
+            border: 1px solid rgba(131, 197, 190, 0.2);
+            margin-top: 1rem;
+        }
+
+        .items-list-item {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid rgba(131, 197, 190, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .items-list-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-info {
+            flex-grow: 1;
+        }
+
+        .item-name {
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: 0.2rem;
+        }
+
+        .item-quantity {
+            font-size: 0.85rem;
+            color: var(--primary-light);
+        }
+
+        /* Stock Status Classes */
+        .stock-normal {
+            background-color: rgba(131, 197, 190, 0.1);
+            color: var(--primary-dark);
+            border: 1px solid rgba(131, 197, 190, 0.3);
+        }
+
+        .stock-limited {
+            background-color: rgba(255, 221, 210, 0.8);
+            color: var(--accent-dark);
+            border: 1px solid rgba(226, 149, 120, 0.3);
+        }
+
+        .stock-empty {
+            background-color: rgba(226, 149, 120, 0.1);
+            color: var(--accent-dark);
+            border: 1px solid var(--accent-dark);
+        }
+
+        /* Validation */
+        .is-invalid {
+            border-color: var(--accent-dark);
+            box-shadow: 0 0 0 0.25rem rgba(226, 149, 120, 0.25);
+        }
+
+        .is-valid {
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 0.25rem rgba(131, 197, 190, 0.25);
+        }
+
+        /* Info Card */
+        .info-card {
+            background: linear-gradient(135deg, var(--accent-light), rgba(255, 221, 210, 0.7));
+            border: 1px solid rgba(226, 149, 120, 0.2);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .info-card h6 {
+            color: var(--primary-dark);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        /* Success Message */
+        .success-message {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-light));
+            color: white;
+            padding: 1rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+            display: none;
+            border: 1px solid var(--primary-light);
+            box-shadow: 0 4px 12px rgba(0, 109, 119, 0.3);
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-light));
+            color: white;
+            padding: 3rem 0;
+            margin-top: 4rem;
+        }
+
+        /* Loading state */
+        .loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 100px;
+            }
+            
+            .header-section {
+                padding: 60px 0 100px;
+            }
+            
+            .header-title {
+                font-size: 2.2rem;
+            }
+            
+            .header-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .form-section {
+                padding: 1.5rem;
+            }
+
+            .custom-dropdown-menu {
+                position: fixed;
+                top: auto !important;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                max-height: 50vh;
+                border-radius: 16px 16px 0 0;
+                z-index: 1050;
+            }
+        }
+
+        /* Toast notifications */
+        .toast-container {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            z-index: 1055;
+        }
+
+        .toast {
+            background: var(--primary-dark);
+            color: white;
+            border: none;
+            min-width: 300px;
+        }
+
+        .toast.toast-success { background: var(--primary-dark); }
+        .toast.toast-warning { background: var(--accent-dark); }
+        .toast.toast-error { background: #dc3545; }
+        .toast.toast-info { background: var(--primary-light); }
+
+        /* Ensure dropdowns work properly */
+        .container-fluid,
+        .container,
+        .row,
+        .col,
+        .col-12,
+        .col-md-4,
+        .col-lg-10,
+        .col-xl-8 {
+            overflow: visible !important;
+        }
+
+        /* Fix for Bootstrap conflicts */
+        .custom-dropdown {
+            overflow: visible !important;
+            z-index: auto;
+        }
+
+        .custom-dropdown-menu {
+            transform: none !important;
+            position: absolute !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#" onclick="showPage('form')">
+                <i class="fas fa-boxes me-2" style="font-size: 1.8rem; color: var(--accent-light);"></i>
+                <div>
+                    <div>LOGISTOK</div>
+                </div>
+            </a>
+            <div class="navbar-subtitle d-none d-md-block">2025 BPS Kota Tanjungpinang</div>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" onclick="showPage('form')">
+                            <i class="fas fa-file-alt me-1"></i>
+                            Form Pengambilan
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showPage('laporan-bulanan')">
+                            <i class="fas fa-calendar-check me-1"></i>
+                            Laporan Bulanan
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showPage('laporan-pegawai')">
+                            <i class="fas fa-users me-1"></i>
+                            Laporan Pegawai
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showPage('visualisasi')">
+                            <i class="fas fa-chart-bar me-1"></i>
+                            Visualisasi Data
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <section class="header-section">
+        <div class="container">
+            <div class="text-center">
+                <div class="header-icon">
+                    <i class="fas fa-clipboard-list"></i>
+                </div>
+                <h1 class="header-title">Form Pengambilan Barang</h1>
+                <p class="header-subtitle">Sistem LOGISTOK - BPS Kota Tanjungpinang 2025</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10 col-xl-8">
+                    <div class="card form-card border-0">
+                        <!-- Form Header -->
+                        <div class="form-header">
+                            <h2 class="h3 text-primary-dark mb-2">
+                                <i class="fas fa-file-alt me-2"></i>
+                                Form Permintaan Barang
+                            </h2>
+                            <p class="text-muted mb-0">Lengkapi informasi di bawah ini untuk mengajukan permintaan pengambilan barang</p>
+                        </div>
+
+                        <form id="formPengambilanBarang">
+                            <!-- Data Pegawai Section -->
+                            <div class="form-section">
+                                <div class="section-header">
+                                    <div class="section-icon">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <h3 class="section-title">Informasi Pegawai</h3>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="mb-4">
+                                            <label for="namaPegawai" class="form-label fw-medium">
+                                                Nama Pegawai <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="custom-dropdown" id="pegawaiDropdown">
+                                                <input type="text" class="form-control" id="namaPegawai" 
+                                                       name="namaPegawai" placeholder="Ketik atau pilih nama pegawai..." 
+                                                       autocomplete="off" required readonly>
+                                                <div class="custom-dropdown-menu" id="pegawaiMenu">
+                                                    <!-- Options will be populated by JavaScript -->
+                                                </div>
+                                            </div>
+                                            <div class="form-text">
+                                                <i class="fas fa-lightbulb me-1"></i>
+                                                Tips: Klik untuk melihat daftar pegawai atau ketik untuk mencari
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Data Barang Section -->
+                            <div class="form-section">
+                                <div class="section-header">
+                                    <div class="section-icon">
+                                        <i class="fas fa-box"></i>
+                                    </div>
+                                    <h3 class="section-title">Detail Barang</h3>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-12 mb-3">
+                                        <label for="namaBarang" class="form-label fw-medium">
+                                            Nama Barang <span class="text-danger">*</span>
+                                        </label>
+                                        <div class="custom-dropdown" id="barangDropdown">
+                                            <input type="text" class="form-control" id="namaBarang" 
+                                                   name="namaBarang" placeholder="Ketik atau pilih nama barang..." 
+                                                   autocomplete="off" required readonly>
+                                            <div class="custom-dropdown-menu" id="barangMenu">
+                                                <!-- Options will be populated by JavaScript -->
+                                            </div>
+                                        </div>
+                                        <div class="form-text">
+                                            <i class="fas fa-search me-1"></i>
+                                            Klik untuk melihat daftar barang atau ketik untuk mencari
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label for="jumlah" class="form-label fw-medium">
+                                            Jumlah <span class="text-danger">*</span>
+                                        </label>
+                                        <input type="number" class="form-control" id="jumlah" name="jumlah" 
+                                               placeholder="0" min="1" required>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="satuan" class="form-label fw-medium">Satuan</label>
+                                        <input type="text" class="form-control" id="satuan" name="satuan" 
+                                               placeholder="Auto" readonly>
+                                    </div>
+                                    <div class="col-md-4 mb-3 d-flex align-items-end">
+                                        <button type="button" class="btn btn-outline-primary w-100" id="addMoreBtn">
+                                            <i class="fas fa-plus me-1"></i>
+                                            Tambah Barang
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Items List Container -->
+                                <div id="itemsListContainer"></div>
+                            </div>
+
+                            <!-- Keterangan Section -->
+                            <div class="form-section">
+                                <div class="section-header">
+                                    <div class="section-icon">
+                                        <i class="fas fa-comment-alt"></i>
+                                    </div>
+                                    <h3 class="section-title">Keterangan Penggunaan</h3>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="mb-4">
+                                            <label for="keterangan" class="form-label fw-medium">
+                                                Detail Penggunaan <span class="text-danger">*</span>
+                                            </label>
+                                            <textarea class="form-control" id="keterangan" name="keterangan" rows="4" 
+                                                    placeholder="Contoh: Kertas A4 untuk keperluan printing dokumen laporan bulanan di divisi keuangan, atau pena untuk kebutuhan administrasi harian staff..." 
+                                                    required></textarea>
+                                            <div class="form-text">Jelaskan secara detail untuk keperluan apa barang tersebut akan digunakan</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Submit Section -->
+                            <div class="form-section">
+                                <div class="success-message" id="successMessage">
+                                    <i class="fas fa-check-circle me-2"></i>
+                                    Permintaan berhasil dikirim!
+                                </div>
+                                
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary btn-lg me-3 px-4" id="submitBtn">
+                                        <i class="fas fa-paper-plane me-2"></i>
+                                        Kirim Permintaan
+                                    </button>
+                                    <button type="reset" class="btn btn-outline-secondary btn-lg px-4" id="resetBtn">
+                                        <i class="fas fa-undo me-2"></i>
+                                        Reset Form
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Info Card -->
+                    <div class="info-card">
+                        <h6>
+                            <i class="fas fa-lightbulb me-2"></i>
+                            Tips Penggunaan Form
+                        </h6>
+                        <ul class="mb-0">
+                            <li><strong>Multiple Items:</strong> Tambahkan beberapa barang sekaligus dalam satu permintaan</li>
+                            <li><strong>Search Cerdas:</strong> Ketik nama, kategori, atau divisi untuk pencarian cepat</li>
+                            <li><strong>Keyboard Navigation:</strong> Gunakan ↑↓ untuk navigasi, Enter untuk pilih, Esc untuk tutup</li>
+                            <li><strong>Validasi Stok:</strong> Sistem akan otomatis cek ketersediaan barang</li>
+                            <li>Pastikan semua field bertanda <span class="text-danger">*</span> telah diisi dengan benar</li>
+                            <li>Keterangan penggunaan harus detail dan spesifik untuk mempercepat approval</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container text-center">
+            <h5 class="mb-3">
+                <i class="fas fa-boxes me-2"></i>
+                LOGISTOK
+            </h5>
+            <p class="mb-2">Sistem Informasi Logistik dan Inventori</p>
+            <p class="mb-2">BPS Kota Tanjungpinang</p>
+            <p class="mb-0 opacity-75">
+                <i class="fas fa-copyright me-1"></i>
+                2025 - Badan Pusat Statistik Kota Tanjungpinang
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Data untuk autocomplete
+        const pegawaiData = [
+            { nama: "Ahmad Susanto", nip: "19850101001", divisi: "Keuangan" },
+            { nama: "Budi Prasetyo", nip: "19900202002", divisi: "IT" },
+            { nama: "Citra Dewi", nip: "19920303003", divisi: "HRD" },
+            { nama: "Dian Kusuma", nip: "19880404004", divisi: "Operasional" },
+            { nama: "Eko Wijaya", nip: "19950505005", divisi: "Marketing" },
+            { nama: "Fatima Sari", nip: "19910606006", divisi: "Keuangan" },
+            { nama: "Gunawan Hidayat", nip: "19870707007", divisi: "Teknis" },
+            { nama: "Hani Putri", nip: "19930808008", divisi: "Admin" },
+            { nama: "Indra Permana", nip: "19890909009", divisi: "IT" },
+            { nama: "Joko Santoso", nip: "19940101010", divisi: "Operasional" },
+            { nama: "Kartika Sari", nip: "19920505011", divisi: "HRD" },
+            { nama: "Lukman Hakim", nip: "19880606012", divisi: "Marketing" }
+        ];
+
+        const barangData = [
+            { nama: "Kertas A4 80gsm", satuan: "Rim", stok: 25, kategori: "ATK" },
+            { nama: "Kertas F4 80gsm", satuan: "Rim", stok: 15, kategori: "ATK" },
+            { nama: "Pena Ballpoint Biru", satuan: "Buah", stok: 100, kategori: "ATK" },
+            { nama: "Pena Ballpoint Hitam", satuan: "Buah", stok: 85, kategori: "ATK" },
+            { nama: "Pensil 2B", satuan: "Buah", stok: 75, kategori: "ATK" },
+            { nama: "Pensil Mekanik", satuan: "Buah", stok: 45, kategori: "ATK" },
+            { nama: "Spidol Boardmarker", satuan: "Buah", stok: 30, kategori: "ATK" },
+            { nama: "Spidol Permanent", satuan: "Buah", stok: 20, kategori: "ATK" },
+            { nama: "Tinta Printer Canon Black", satuan: "Botol", stok: 8, kategori: "Printer" },
+            { nama: "Tinta Printer HP Black", satuan: "Botol", stok: 12, kategori: "Printer" },
+            { nama: "Tinta Printer Canon Color", satuan: "Botol", stok: 6, kategori: "Printer" },
+            { nama: "Stapler Besar (HD-10)", satuan: "Buah", stok: 5, kategori: "ATK" },
+            { nama: "Stapler Kecil (HD-3)", satuan: "Buah", stok: 10, kategori: "ATK" },
+            { nama: "Folder Plastik Warna", satuan: "Buah", stok: 50, kategori: "Filing" },
+            { nama: "Map Kertas Manila", satuan: "Buah", stok: 40, kategori: "Filing" },
+            { nama: "Lem Stick Kenko", satuan: "Buah", stok: 20, kategori: "ATK" },
+            { nama: "Correction Tape", satuan: "Buah", stok: 15, kategori: "ATK" },
+            { nama: "Highlighter Kuning", satuan: "Buah", stok: 25, kategori: "ATK" },
+            { nama: "Highlighter Pink", satuan: "Buah", stok: 18, kategori: "ATK" },
+            { nama: "Amplop Putih Besar", satuan: "Pack", stok: 12, kategori: "ATK" },
+            { nama: "Amplop Coklat Kecil", satuan: "Pack", stok: 15, kategori: "ATK" },
+            { nama: "Double Tape", satuan: "Buah", stok: 8, kategori: "ATK" },
+            { nama: "Lakban Bening", satuan: "Buah", stok: 10, kategori: "ATK" },
+            { nama: "Klip Kertas Kecil", satuan: "Box", stok: 20, kategori: "ATK" },
+            { nama: "Klip Kertas Besar", satuan: "Box", stok: 15, kategori: "ATK" },
+            { nama: "Buku Tulis", satuan: "Buah", stok: 0, kategori: "ATK" },
+            { nama: "Penggaris", satuan: "Buah", stok: 3, kategori: "ATK" }
+        ];
+
+        // Global variables
+        window.itemList = [];
+        let selectedBarang = null;
+
+        // Bootstrap-compatible Dropdown Class
+        class BootstrapDropdown {
+            constructor(containerId, inputId, menuId, data, config = {}) {
+                this.container = document.getElementById(containerId);
+                this.input = document.getElementById(inputId);
+                this.menu = document.getElementById(menuId);
+                this.data = data;
+                this.filteredData = [...data];
+                this.selectedIndex = -1;
+                this.isOpen = false;
+
+                this.config = {
+                    searchKey: config.searchKey || 'nama',
+                    displayKey: config.displayKey || 'nama',
+                    icon: config.icon || 'fas fa-search',
+                    onSelect: config.onSelect || function() {},
+                    ...config
+                };
+
+                this.init();
+            }
+
+            init() {
+                this.setupEventListeners();
+                this.renderOptions();
+            }
+
+            setupEventListeners() {
+                // Input events
+                this.input.addEventListener('click', () => this.toggle());
+                this.input.addEventListener('input', (e) => this.handleInput(e));
+                this.input.addEventListener('keydown', (e) => this.handleKeydown(e));
+
+                // Close on outside click
+                document.addEventListener('click', (e) => {
+                    if (!this.container.contains(e.target)) {
+                        this.close();
+                    }
+                });
+
+                // Menu item clicks
+                this.menu.addEventListener('click', (e) => this.handleMenuClick(e));
+            }
+
+            handleInput(e) {
+                this.input.removeAttribute('readonly');
+                const query = e.target.value.toLowerCase();
+                this.filterData(query);
+                this.renderOptions();
+                this.selectedIndex = -1;
+                this.open();
+            }
+
+            handleKeydown(e) {
+                if (!this.isOpen && (e.key === 'ArrowDown' || e.key === 'ArrowUp')) {
+                    this.open();
+                    return;
+                }
+
+                switch (e.key) {
+                    case 'ArrowDown':
+                        e.preventDefault();
+                        this.selectedIndex = Math.min(this.selectedIndex + 1, this.filteredData.length - 1);
+                        this.updateHighlight();
+                        break;
+                    case 'ArrowUp':
+                        e.preventDefault();
+                        this.selectedIndex = Math.max(this.selectedIndex - 1, -1);
+                        this.updateHighlight();
+                        break;
+                    case 'Enter':
+                        e.preventDefault();
+                        if (this.selectedIndex >= 0) {
+                            this.selectItem(this.filteredData[this.selectedIndex]);
+                        }
+                        break;
+                    case 'Escape':
+                        this.close();
+                        break;
+                }
+            }
+
+            handleMenuClick(e) {
+                const item = e.target.closest('.custom-dropdown-item');
+                if (item) {
+                    const index = parseInt(item.dataset.index);
+                    this.selectItem(this.filteredData[index]);
+                }
+            }
+
+            filterData(query) {
+                if (!query || query.length < 1) {
+                    this.filteredData = [...this.data];
+                    return;
+                }
+
+                this.filteredData = this.data.filter(item => {
+                    const name = item[this.config.searchKey].toLowerCase();
+                    const kategori = item.kategori ? item.kategori.toLowerCase() : '';
+                    const divisi = item.divisi ? item.divisi.toLowerCase() : '';
+                    const nip = item.nip ? item.nip.toLowerCase() : '';
+                    
+                    return name.includes(query) || 
+                           kategori.includes(query) || 
+                           divisi.includes(query) ||
+                           nip.includes(query);
+                });
+
+                // Sort by relevance
+                this.filteredData.sort((a, b) => {
+                    const aName = a[this.config.searchKey].toLowerCase();
+                    const bName = b[this.config.searchKey].toLowerCase();
+                    
+                    if (aName.startsWith(query)) return -1;
+                    if (bName.startsWith(query)) return 1;
+                    return aName.localeCompare(bName);
+                });
+            }
+
+            renderOptions() {
+                if (this.filteredData.length === 0) {
+                    this.menu.innerHTML = `
+                        <div class="custom-dropdown-item text-muted">
+                            <i class="fas fa-search dropdown-item-icon"></i>
+                            <div class="dropdown-item-text">Tidak ada hasil ditemukan</div>
+                        </div>
+                    `;
+                    return;
+                }
+
+                const query = this.input.value.toLowerCase();
+                this.menu.innerHTML = this.filteredData.map((item, index) => {
+                    const displayText = item[this.config.displayKey];
+                    const highlightedText = this.highlightMatch(displayText, query);
+                    
+                    let additionalInfo = '';
+                    if (item.stok !== undefined) {
+                        const stockLevel = item.stok > 20 ? 'high' : item.stok > 5 ? 'medium' : 'low';
+                        const stockText = item.stok === 0 ? 'Habis' : item.stok;
+                        additionalInfo = `<span class="stock-badge ${stockLevel}">Stok: ${stockText}</span>`;
+                    }
+                    if (item.divisi) {
+                        additionalInfo = `<small class="text-muted">${item.divisi}</small>`;
+                    }
+                    
+                    return `
+                        <div class="custom-dropdown-item" data-index="${index}">
+                            <i class="${this.config.icon} dropdown-item-icon"></i>
+                            <div class="dropdown-item-text">${highlightedText}</div>
+                            <div class="dropdown-item-info">${additionalInfo}</div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            highlightMatch(text, query) {
+                if (!query) return text;
+                const regex = new RegExp(`(${this.escapeRegex(query)})`, 'gi');
+                return text.replace(regex, '<span class="highlight">$1</span>');
+            }
+
+            escapeRegex(string) {
+                return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            }
+
+            updateHighlight() {
+                const items = this.menu.querySelectorAll('.custom-dropdown-item');
+                items.forEach((item, index) => {
+                    item.classList.toggle('active', index === this.selectedIndex);
+                });
+
+                if (this.selectedIndex >= 0 && items[this.selectedIndex]) {
+                    items[this.selectedIndex].scrollIntoView({
+                        block: 'nearest',
+                        behavior: 'smooth'
+                    });
+                }
+            }
+
+            selectItem(item) {
+                this.input.value = item[this.config.displayKey];
+                this.input.setAttribute('readonly', '');
+                this.close();
+                this.config.onSelect(item);
+            }
+
+            open() {
+                if (this.isOpen) return;
+                this.isOpen = true;
+                this.container.classList.add('show');
+                this.selectedIndex = -1;
+            }
+
+            close() {
+                if (!this.isOpen) return;
+                this.isOpen = false;
+                this.container.classList.remove('show');
+                this.input.setAttribute('readonly', '');
+            }
+
+            toggle() {
+                if (this.isOpen) {
+                    this.close();
+                } else {
+                    this.input.removeAttribute('readonly');
+                    this.open();
+                }
+            }
+
+            reset() {
+                this.input.value = '';
+                this.input.setAttribute('readonly', '');
+                this.close();
+                this.filteredData = [...this.data];
+                this.renderOptions();
+            }
+        }
+
+        // Initialize dropdowns
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeDropdowns();
+            initializeFormHandlers();
+        });
+
+        function initializeDropdowns() {
+            // Pegawai dropdown
+            window.pegawaiDropdown = new BootstrapDropdown(
+                'pegawaiDropdown',
+                'namaPegawai',
+                'pegawaiMenu',
+                pegawaiData,
+                {
+                    searchKey: 'nama',
+                    displayKey: 'nama',
+                    icon: 'fas fa-user',
+                    onSelect: function(item) {
+                        showToast(`Pegawai ${item.nama} dipilih`, 'success');
+                    }
+                }
+            );
+
+            // Barang dropdown
+            window.barangDropdown = new BootstrapDropdown(
+                'barangDropdown',
+                'namaBarang',
+                'barangMenu',
+                barangData,
+                {
+                    searchKey: 'nama',
+                    displayKey: 'nama',
+                    icon: 'fas fa-cube',
+                    onSelect: function(item) {
+                        selectedBarang = item;
+                        
+                        const satuanInput = document.getElementById('satuan');
+                        const jumlahInput = document.getElementById('jumlah');
+                        
+                        satuanInput.value = item.satuan;
+                        setupStockValidation(item, jumlahInput);
+                    }
+                }
+            );
+        }
+
+        function setupStockValidation(item, jumlahInput) {
+            // Clear previous classes
+            jumlahInput.classList.remove('stock-normal', 'stock-limited', 'stock-empty');
+            
+            if (item.stok <= 0) {
+                jumlahInput.disabled = true;
+                jumlahInput.placeholder = 'Stok habis';
+                jumlahInput.classList.add('stock-empty');
+                showToast(`${item.nama} stok habis!`, 'error');
+            } else if (item.stok <= 5) {
+                jumlahInput.disabled = false;
+                jumlahInput.placeholder = `Max: ${item.stok}`;
+                jumlahInput.max = item.stok;
+                jumlahInput.classList.add('stock-limited');
+                showToast(`${item.nama} dipilih. Stok terbatas: ${item.stok}`, 'warning');
+            } else {
+                jumlahInput.disabled = false;
+                jumlahInput.placeholder = `Max: ${item.stok}`;
+                jumlahInput.max = item.stok;
+                jumlahInput.classList.add('stock-normal');
+                showToast(`${item.nama} dipilih. Stok: ${item.stok}`, 'success');
+            }
+            
+            setupQuantityValidation();
+        }
+
+        function setupQuantityValidation() {
+            const jumlahInput = document.getElementById('jumlah');
+            if (!jumlahInput) return;
+            
+            // Remove existing listeners
+            jumlahInput.replaceWith(jumlahInput.cloneNode(true));
+            const newJumlahInput = document.getElementById('jumlah');
+            
+            newJumlahInput.addEventListener('input', function() {
+                enforceStockLimit(this);
+            });
+        }
+
+        function enforceStockLimit(input) {
+            if (!selectedBarang) return;
+            
+            const currentValue = parseInt(input.value);
+            const maxStock = selectedBarang.stok;
+            
+            if (isNaN(currentValue)) return;
+            
+            if (currentValue > maxStock) {
+                input.value = maxStock;
+                showToast(`Jumlah tidak boleh melebihi stok tersedia (${maxStock})`, 'error');
+            } else if (currentValue <= 0) {
+                showToast('Jumlah harus lebih dari 0', 'warning');
+            }
+        }
+
+        function initializeFormHandlers() {
+            document.getElementById('formPengambilanBarang').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = collectFormData();
+                if (!validateForm(formData)) {
+                    return;
+                }
+
+                animateSubmit(formData);
+            });
+
+            document.getElementById('resetBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                resetForm();
+            });
+
+            document.getElementById('addMoreBtn').addEventListener('click', function() {
+                const namaBarang = document.getElementById('namaBarang').value;
+                const jumlah = document.getElementById('jumlah').value;
+                const satuan = document.getElementById('satuan').value;
+
+                if (!namaBarang || !jumlah) {
+                    showToast('Lengkapi data barang sebelum menambah item baru', 'warning');
+                    return;
+                }
+
+                addItemToList(namaBarang, jumlah, satuan);
+                clearCurrentItem();
+            });
+        }
+
+        function addItemToList(nama, jumlah, satuan) {
+            const item = { nama, jumlah, satuan };
+            window.itemList.push(item);
+            updateItemsDisplay();
+            showToast(`${nama} (${jumlah} ${satuan}) ditambahkan ke daftar`, 'success');
+        }
+
+        function clearCurrentItem() {
+            document.getElementById('namaBarang').value = '';
+            document.getElementById('jumlah').value = '';
+            document.getElementById('satuan').value = '';
+            selectedBarang = null;
+            
+            const jumlahInput = document.getElementById('jumlah');
+            jumlahInput.disabled = false;
+            jumlahInput.placeholder = '0';
+            jumlahInput.removeAttribute('max');
+            jumlahInput.classList.remove('stock-normal', 'stock-limited', 'stock-empty');
+            
+            if (window.barangDropdown) {
+                window.barangDropdown.reset();
+            }
+        }
+
+        function updateItemsDisplay() {
+            const container = document.getElementById('itemsListContainer');
+
+            if (window.itemList.length === 0) {
+                container.innerHTML = '';
+                return;
+            }
+
+            container.innerHTML = `
+                <div class="items-list-card">
+                    <div class="card-header bg-transparent border-0 pb-0">
+                        <h6 class="mb-0 text-primary">
+                            <i class="fas fa-list me-2"></i>
+                            Daftar Barang (${window.itemList.length} item)
+                        </h6>
+                    </div>
+                    <div class="card-body pt-2">
+                        ${window.itemList.map((item, index) => `
+                            <div class="items-list-item">
+                                <div class="item-info">
+                                    <div class="item-name">${item.nama}</div>
+                                    <div class="item-quantity">${item.jumlah} ${item.satuan}</div>
+                                </div>
+                                <button type="button" class="btn btn-sm btn-outline-danger" onclick="removeItem(${index})">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function removeItem(index) {
+            const removedItem = window.itemList[index];
+            window.itemList.splice(index, 1);
+            updateItemsDisplay();
+            showToast(`${removedItem.nama} dihapus dari daftar`, 'info');
+        }
+
+        function collectFormData() {
+            const currentItem = {
+                namaBarang: document.getElementById('namaBarang').value,
+                jumlah: document.getElementById('jumlah').value,
+                satuan: document.getElementById('satuan').value
+            };
+
+            let allItems = [...window.itemList];
+            if (currentItem.namaBarang && currentItem.jumlah) {
+                allItems.push(currentItem);
+            }
+
+            return {
+                namaPegawai: document.getElementById('namaPegawai').value,
+                items: allItems,
+                keterangan: document.getElementById('keterangan').value,
+                timestamp: new Date().toLocaleString('id-ID')
+            };
+        }
+
+        function validateForm(formData) {
+            if (!formData.namaPegawai) {
+                showToast('Nama pegawai harus diisi', 'error');
+                return false;
+            }
+            
+            if (formData.items.length === 0) {
+                showToast('Minimal satu barang harus dipilih', 'error');
+                return false;
+            }
+            
+            if (!formData.keterangan) {
+                showToast('Keterangan penggunaan harus diisi', 'error');
+                return false;
+            }
+            
+            return true;
+        }
+
+        function animateSubmit(formData) {
+            const submitBtn = document.getElementById('submitBtn');
+            const originalText = submitBtn.innerHTML;
+            
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Mengirim...';
+            submitBtn.disabled = true;
+
+            setTimeout(() => {
+                submitBtn.innerHTML = '<i class="fas fa-check me-2"></i>Berhasil!';
+                
+                const successMsg = document.getElementById('successMessage');
+                successMsg.style.display = 'block';
+
+                console.log('Data to be sent to Google Sheets:', formData);
+                showToast('Permintaan berhasil dikirim! Data tersimpan ke sistem.', 'success');
+
+                setTimeout(() => {
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                    resetForm();
+                    successMsg.style.display = 'none';
+                }, 2000);
+            }, 1500);
+        }
+
+        function resetForm() {
+            document.getElementById('formPengambilanBarang').reset();
+            
+            if (window.pegawaiDropdown) {
+                window.pegawaiDropdown.reset();
+            }
+            if (window.barangDropdown) {
+                window.barangDropdown.reset();
+            }
+            
+            selectedBarang = null;
+            window.itemList = [];
+            
+            const jumlahInput = document.getElementById('jumlah');
+            jumlahInput.disabled = false;
+            jumlahInput.placeholder = '0';
+            jumlahInput.removeAttribute('max');
+            jumlahInput.classList.remove('stock-normal', 'stock-limited', 'stock-empty');
+            
+            updateItemsDisplay();
+        }
+
+        function showPage(page) {
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            event.currentTarget.classList.add('active');
+            
+            switch(page) {
+                case 'form':
+                    showToast('Form Pengambilan Barang - Halaman Aktif', 'info');
+                    break;
+                case 'laporan-bulanan':
+                    showToast('Fitur Laporan Bulanan - Dalam Pengembangan', 'warning');
+                    break;
+                case 'laporan-pegawai':
+                    showToast('Fitur Laporan Pegawai - Dalam Pengembangan', 'warning');
+                    break;
+                case 'visualisasi':
+                    showToast('Fitur Visualisasi Data - Dalam Pengembangan', 'warning');
+                    break;
+            }
+        }
+
+        function showToast(message, type = 'info') {
+            const toastContainer = document.getElementById('toastContainer');
+            
+            const colors = {
+                success: 'var(--primary-dark)',
+                warning: 'var(--accent-dark)',
+                error: '#dc3545',
+                info: 'var(--primary-light)'
+            };
+            
+            const icons = {
+                success: 'fas fa-check-circle',
+                warning: 'fas fa-exclamation-triangle',
+                error: 'fas fa-times-circle',
+                info: 'fas fa-info-circle'
+            };
+
+            const toastId = 'toast-' + Date.now();
+            const toastEl = document.createElement('div');
+            toastEl.className = `toast align-items-center text-white border-0 toast-${type}`;
+            toastEl.id = toastId;
+            toastEl.setAttribute('role', 'alert');
+            toastEl.style.background = colors[type];
+            
+            toastEl.innerHTML = `
+                <div class="d-flex">
+                    <div class="toast-body d-flex align-items-center">
+                        <i class="${icons[type]} me-2"></i>
+                        <span>${message}</span>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                </div>
+            `;
+
+            toastContainer.appendChild(toastEl);
+
+            const toast = new bootstrap.Toast(toastEl, {
+                autohide: true,
+                delay: 4000
+            });
+            
+            toast.show();
+
+            // Remove element after it's hidden
+            toastEl.addEventListener('hidden.bs.toast', () => {
+                toastEl.remove();
+            });
+        }
+    </script>
+</body>
+</html>
