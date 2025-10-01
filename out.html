@@ -26,7 +26,7 @@
         }
         
         .logo-column {
-            width: 180px;
+            width: 340px;
             vertical-align: middle;
         }
         
@@ -42,10 +42,10 @@
         
         /* LOGO CONTAINER - RATIO 16:3 */
         .logo-container {
-            width: 160px !important;
-            height: 30px !important;
-            max-width: 160px !important;
-            max-height: 30px !important;
+            width: 320px !important;
+            height: 60px !important;
+            max-width: 320px !important;
+            max-height: 60px !important;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -54,16 +54,16 @@
         }
         
         .logo-container img {
-            width: 160px !important;
-            height: 30px !important;
-            max-width: 160px !important;
-            max-height: 30px !important;
+            width: 320px !important;
+            height: 60px !important;
+            max-width: 320px !important;
+            max-height: 60px !important;
             object-fit: contain;
         }
         
         .logo-fallback {
-            width: 160px !important;
-            height: 30px !important;
+            width: 320px !important;
+            height: 60px !important;
             border: 2px dashed #ccc;
             display: flex;
             align-items: center;
@@ -470,12 +470,12 @@
                 if (logoImg && logoImg.complete && logoImg.naturalHeight !== 0) {
                     // Buat canvas untuk convert logo ke base64
                     const canvas = document.createElement('canvas');
-                    canvas.width = 160;
-                    canvas.height = 30;
+                    canvas.width = 320;
+                    canvas.height = 60;
                     const ctx = canvas.getContext('2d');
                     
                     // Gambar logo ke canvas
-                    ctx.drawImage(logoImg, 0, 0, 160, 30);
+                    ctx.drawImage(logoImg, 0, 0, 320, 60);
                     
                     // Convert ke base64
                     logoBase64 = canvas.toDataURL('image/png');
@@ -511,7 +511,7 @@
             if (logoBase64) {
                 cleanContent = cleanContent.replace(
                     /<img[^>]*id="mainLogo"[^>]*>/,
-                    `<img src="${logoBase64}" alt="Logo BPS" style="width:160px;height:30px;">`
+                    `<img src="${logoBase64}" alt="Logo BPS" style="width:320px;height:60px;">`
                 );
             } else {
                 cleanContent = cleanContent.replace(
@@ -564,13 +564,13 @@
                         }
                         
                         .logo-container {
-                            width: 160px;
-                            height: 30px;
+                            width: 320px;
+                            height: 60px;
                         }
                         
                         .logo-container img {
-                            width: 160px;
-                            height: 30px;
+                            width: 320px;
+                            height: 60px;
                             display: block;
                         }
                         
@@ -579,7 +579,7 @@
                         }
                         
                         .logo-column {
-                            width: 180px;
+                            width: 340px;
                         }
                         
                         .spacer-column {
