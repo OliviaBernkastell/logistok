@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surat Permintaan Barang ATK & ARK</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', serif;
+            font-size: 12pt;
+            margin: 20px;
+            line-height: 1.4;
+        }
+        
+        /* HEADER TABLE - 3 KOLOM LAYOUT */
+        .header-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        
+        .header-table td {
+            border: none;
+            padding: 5px;
+            vertical-align: middle;
+        }
+        
+        .logo-column {
+            width: 180px;
+            vertical-align: middle;
+        }
+        
+        .spacer-column {
+            width: auto;
+            min-width: 200px;
+        }
+        
+        .info-column {
+            width: 250px;
+            vertical-align: middle;
+        }
+        
+        /* LOGO CONTAINER - RATIO 16:3 */
+        .logo-container {
+            width: 160px !important;
+            height: 30px !important;
+            max-width: 160px !important;
+            max-height: 30px !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+        }
+        
+        .logo-container img {
+            width: 160px !important;
+            height: 30px !important;
+            max-width: 160px !important;
+            max-height: 30px !important;
+            object-fit: contain;
+        }
+        
+        .logo-fallback {
+            width: 160px !important;
+            height: 30px !important;
+            border: 2px dashed #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9px;
+            color: #666;
+            text-align: center;
+            background-color: #f9f9f9;
+        }
+        
+        /* INFO TABLE NESTED */
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .info-table td {
+            border: none;
+            padding: 2px;
+            font-size: 11pt;
+        }
+        
+        .info-label {
+            text-align: left;
+            width: 100px;
+        }
+        
+        .info-separator {
+            text-align: center;
+            width: 20px;
+        }
+        
+        .info-value {
+            text-align: left;
+            width: 130px;
+        }
+        
+        .document-title {
+            text-align: center;
+            font-weight: bold;
+            font-size: 12pt;
+            text-decoration: underline;
+            margin: 20px 0;
+        }
+        
+        .work-unit {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        
+        .main-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        
+        /* Table headers - TIDAK BOLD */
+        .main-table th {
+            border: 1px solid black;
+            padding: 6px;
+            text-align: center;
+            vertical-align: middle;
+            font-size: 11pt;
+            font-weight: normal;
+        }
+        
+        /* Data rows - border normal */
+        .main-table .data-row td {
+            border: 1px solid black;
+            padding: 6px;
+            text-align: center;
+            vertical-align: middle;
+            font-size: 11pt;
+        }
+        
+        .main-table .name-column {
+            text-align: left;
+            width: 200px;
+        }
+        
+        .main-table .no-column {
+            width: 40px;
+        }
+        
+        .main-table .qty-column {
+            width: 60px;
+        }
+        
+        .main-table .unit-column {
+            width: 80px;
+        }
+        
+        .main-table .note-column {
+            width: 120px;
+        }
+        
+        /* Signature rows - FULL WIDTH, TIDAK ADA BORDER VERTIKAL DI TENGAH */
+        .main-table .signature-row td {
+            border-left: 1px solid black;
+            border-right: 1px solid black;
+            border-top: none;
+            border-bottom: none;
+            padding: 10px;
+            vertical-align: top;
+            font-size: 11pt;
+        }
+        
+        /* PENGELUARAN BARANG title - ADA TOP BORDER, TIDAK BOLD */
+        .main-table .pengeluaran-title-row td {
+            border-left: 1px solid black;
+            border-right: 1px solid black;
+            border-top: 1px solid black;
+            border-bottom: 1px solid black;
+            padding: 8px;
+            text-align: center;
+            font-weight: normal;
+            background-color: white;
+        }
+        
+        /* PENGELUARAN content - FULL WIDTH, TIDAK ADA BORDER VERTIKAL DI TENGAH */
+        .main-table .pengeluaran-content-row td {
+            border-left: 1px solid black;
+            border-right: 1px solid black;
+            border-top: none;
+            border-bottom: 1px solid black;
+            padding: 15px;
+            text-align: center;
+            vertical-align: top;
+            font-size: 11pt;
+        }
+        
+        .note-kasubbag {
+            margin-top: 10px;
+            color: red;
+            font-size: 10pt;
+        }
+        
+        .action-buttons {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-left: 5px;
+            margin-bottom: 5px;
+        }
+        
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        
+        .btn-success {
+            background-color: #28a745;
+        }
+        
+        .btn-success:hover {
+            background-color: #218838;
+        }
+        
+        .btn-info {
+            background-color: #17a2b8;
+        }
+        
+        .btn-info:hover {
+            background-color: #138496;
+        }
+        
+        @media print {
+            .action-buttons {
+                display: none;
+            }
+        }
+        
+        .editable-cell {
+            background-color: #f8f9fa;
+        }
+        
+        .editable-cell:hover {
+            background-color: #e9ecef;
+        }
+        
+        input[type="text"], input[type="number"] {
+            border: none;
+            background: transparent;
+            width: 100%;
+            text-align: inherit;
+            font-family: inherit;
+            font-size: inherit;
+        }
+        
+        input[type="text"]:focus, input[type="number"]:focus {
+            outline: 2px solid #007bff;
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="action-buttons">
+        <button class="btn btn-success" onclick="exportToWord()">📄 Export Word</button>
+        <button class="btn btn-info" onclick="printDocument()">🖨️ Print</button>
+        <button class="btn" onclick="toggleEdit()">✏️ Edit</button>
+    </div>
+    
+    <div id="document-content">
+        <!-- Header: 3 kolom layout - Logo | Spacer | Nomor/Dibukukan -->
+        <table class="header-table">
+            <tr>
+                <td class="logo-column">
+                    <div class="logo-container">
+                        <img src="logo.png" alt="Logo BPS Tanjungpinang" id="mainLogo">
+                    </div>
+                </td>
+                <td class="spacer-column">
+                    <!-- SEPARATOR COLUMN -->
+                    &nbsp;
+                </td>
+                <td class="info-column">
+                    <table class="info-table">
+                        <tr>
+                            <td class="info-label">*) Nomor</td>
+                            <td class="info-separator">:</td>
+                            <td class="info-value">................</td>
+                        </tr>
+                        <tr>
+                            <td class="info-label">*) Dibukukan</td>
+                            <td class="info-separator">:</td>
+                            <td class="info-value">................</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <div class="document-title">SURAT PERMINTAAN BARANG ATK & ARK BULAN SEPTEMBER 2025</div>
+        
+        <div class="work-unit">
+            Unit Kerja : BPS Kota Tanjungpinang
+        </div>
+        
+        <table class="main-table">
+            <thead>
+                <tr>
+                    <th rowspan="2" class="no-column">No.</th>
+                    <th rowspan="2" class="name-column">Nama Barang</th>
+                    <th colspan="2">Banyaknya</th>
+                    <th rowspan="2" class="unit-column">Satuan</th>
+                    <th rowspan="2" class="note-column">Keterangan</th>
+                </tr>
+                <tr>
+                    <th class="qty-column">Diminta</th>
+                    <th class="qty-column">Disetujui*)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="data-row">
+                    <td>(1)</td>
+                    <td class="name-column">(2)</td>
+                    <td>(3)</td>
+                    <td>(4)</td>
+                    <td>(5)</td>
+                    <td>(6)</td>
+                </tr>
+                <tr class="data-row">
+                    <td>1.</td>
+                    <td class="name-column editable-cell">Map Art Paper</td>
+                    <td class="editable-cell">2</td>
+                    <td class="editable-cell">2</td>
+                    <td class="editable-cell">Lembar</td>
+                    <td class="editable-cell">ATK Wilkerstat</td>
+                </tr>
+                <tr class="data-row">
+                    <td>2.</td>
+                    <td class="name-column editable-cell">dst</td>
+                    <td class="editable-cell"></td>
+                    <td class="editable-cell"></td>
+                    <td class="editable-cell"></td>
+                    <td class="editable-cell"></td>
+                </tr>
+                
+                <!-- Signature section - FULL WIDTH TANPA BORDER VERTIKAL DI TENGAH -->
+                <tr class="signature-row">
+                    <td colspan="6" style="padding: 15px;">
+                        <table style="width: 100%; border: none;">
+                            <tr>
+                                <td style="border: none; width: 50%; text-align: center; vertical-align: top;">
+                                    Setuju Dikeluarkan :<br>
+                                    Pejabat Pengadaan
+                                </td>
+                                <td style="border: none; width: 50%; text-align: center; vertical-align: top;">
+                                    Tanjungpinang, ........................ 2025.-<br>
+                                    Kepala Sub Bagian Umum
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                
+                <tr class="signature-row">
+                    <td colspan="6" style="padding: 15px;">
+                        <table style="width: 100%; border: none;">
+                            <tr>
+                                <td style="border: none; width: 50%; text-align: center; vertical-align: top;">
+                                    <br><br><br><br>
+                                    Kak Artha?<br>
+                                    NIP.......
+                                </td>
+                                <td style="border: none; width: 50%; text-align: center; vertical-align: top;">
+                                    <br><br><br><br>
+                                    ( Afriani Mahardika )<br>
+                                    NIP.
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                
+                <!-- PENGELUARAN BARANG title - ADA TOP BORDER -->
+                <tr class="pengeluaran-title-row">
+                    <td colspan="6">PENGELUARAN BARANG</td>
+                </tr>
+                
+                <!-- PENGELUARAN content - FULL WIDTH TANPA BORDER VERTIKAL DI TENGAH -->
+                <tr class="pengeluaran-content-row">
+                    <td colspan="6">
+                        <table style="width: 100%; border: none;">
+                            <tr>
+                                <td style="border: none; width: 50%; text-align: center; vertical-align: top;">
+                                    Petugas Gudang,<br><br><br><br>
+                                    (Nurul Wahida)<br>
+                                    NIP. 20000402 202104 2 001
+                                </td>
+                                <td style="border: none; width: 50%; text-align: center; vertical-align: top;">
+                                    Penerima Barang,<br><br><br><br>
+                                    ( Albert Assidiq )<br>
+                                    NIP.
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="note-kasubbag">
+            *) Diisi Kasubbag
+        </div>
+    </div>
+
+    <script>
+        let editMode = false;
+        
+        function toggleEdit() {
+            editMode = !editMode;
+            const editableCells = document.querySelectorAll('.editable-cell');
+            const btn = event.target;
+            
+            if (editMode) {
+                editableCells.forEach(cell => {
+                    const currentText = cell.textContent.trim();
+                    cell.innerHTML = `<input type="text" value="${currentText}" onblur="updateCell(this)" onkeydown="handleKeyDown(event)">`;
+                    if (cell.querySelector('input')) {
+                        cell.querySelector('input').focus();
+                    }
+                });
+                btn.textContent = '✅ Save';
+                btn.style.backgroundColor = '#28a745';
+            } else {
+                editableCells.forEach(cell => {
+                    const input = cell.querySelector('input');
+                    if (input) {
+                        cell.textContent = input.value;
+                    }
+                });
+                btn.textContent = '✏️ Edit';
+                btn.style.backgroundColor = '#007bff';
+            }
+        }
+        
+        function updateCell(input) {
+            input.parentElement.textContent = input.value;
+        }
+        
+        function handleKeyDown(event) {
+            if (event.key === 'Enter') {
+                event.target.blur();
+            }
+        }
+        
+        function exportToWord() {
+            const logoImg = document.getElementById('mainLogo');
+            let logoBase64 = null;
+            
+            try {
+                // Cek apakah logo sudah loaded
+                if (logoImg && logoImg.complete && logoImg.naturalHeight !== 0) {
+                    // Buat canvas untuk convert logo ke base64
+                    const canvas = document.createElement('canvas');
+                    canvas.width = 160;
+                    canvas.height = 30;
+                    const ctx = canvas.getContext('2d');
+                    
+                    // Gambar logo ke canvas
+                    ctx.drawImage(logoImg, 0, 0, 160, 30);
+                    
+                    // Convert ke base64
+                    logoBase64 = canvas.toDataURL('image/png');
+                }
+            } catch (error) {
+                console.log('Logo tidak bisa dikonversi, lanjut tanpa logo');
+            }
+            
+            // Generate Word dengan atau tanpa logo
+            generateWordDocument(logoBase64);
+        }
+        
+        function generateWordDocument(logoBase64) {
+            const content = document.getElementById('document-content').innerHTML;
+            
+            let cleanContent = content
+                .replace(/class="editable-cell"/g, '')
+                .replace(/<input[^>]*>/g, (match) => {
+                    const valueMatch = match.match(/value="([^"]*)"/);
+                    return valueMatch ? valueMatch[1] : '';
+                })
+                .replace(/(<tr class="data-row"[\s\S]*?<\/tr>)/g, function(match, rowContent) {
+                    return rowContent.replace(/(<td[^>]*>)([\s\S]*?)(<\/td>)/g, function(cellMatch, openTag, cellContent, closeTag) {
+                        const cleanCellContent = cellContent
+                            .replace(/<[^>]*>/g, '')
+                            .replace(/\s+/g, ' ')
+                            .trim();
+                        return openTag + cleanCellContent + closeTag;
+                    });
+                });
+            
+            // Replace logo dengan base64 atau kosongkan
+            if (logoBase64) {
+                cleanContent = cleanContent.replace(
+                    /<img[^>]*id="mainLogo"[^>]*>/,
+                    `<img src="${logoBase64}" alt="Logo BPS" style="width:160px;height:30px;">`
+                );
+            } else {
+                cleanContent = cleanContent.replace(
+                    /<img[^>]*id="mainLogo"[^>]*>/,
+                    ''
+                );
+            }
+            
+            const wordDocument = `
+                <html xmlns:o='urn:schemas-microsoft-com:office:office' 
+                      xmlns:w='urn:schemas-microsoft-com:office:word' 
+                      xmlns='http://www.w3.org/TR/REC-html40'>
+                <head>
+                    <meta charset='utf-8'>
+                    <title>Surat Permintaan Barang ATK & ARK</title>
+                    <!--[if gte mso 9]>
+                    <xml>
+                        <w:WordDocument>
+                            <w:View>Print</w:View>
+                            <w:Zoom>90</w:Zoom>
+                            <w:DoNotPromptForConvert/>
+                            <w:DoNotShowRevisions/>
+                            <w:DoNotPrintRevisions/>
+                            <w:DoNotShowMarkup/>
+                            <w:DoNotShowComments/>
+                            <w:DoNotShowInsertionsAndDeletions/>
+                            <w:DoNotShowPropertyChanges/>
+                            <w:Printing>
+                                <w:PrintBackground/>
+                            </w:Printing>
+                        </w:WordDocument>
+                    </xml>
+                    <![endif]-->
+                    <style>
+                        body {
+                            font-family: 'Times New Roman', serif;
+                            font-size: 12pt;
+                            margin: 20px;
+                            line-height: 1.4;
+                        }
+                        
+                        table {
+                            border-collapse: collapse;
+                            width: 100%;
+                        }
+                        
+                        td, th {
+                            padding: 0;
+                            margin: 0;
+                        }
+                        
+                        .logo-container {
+                            width: 160px;
+                            height: 30px;
+                        }
+                        
+                        .logo-container img {
+                            width: 160px;
+                            height: 30px;
+                            display: block;
+                        }
+                        
+                        .header-table td {
+                            vertical-align: middle;
+                        }
+                        
+                        .logo-column {
+                            width: 180px;
+                        }
+                        
+                        .spacer-column {
+                            width: auto;
+                            min-width: 200px;
+                        }
+                        
+                        .info-column {
+                            width: 250px;
+                        }
+                        
+                        .info-table td {
+                            padding: 2px;
+                            font-size: 11pt;
+                        }
+                        
+                        .document-title {
+                            text-align: center;
+                            font-weight: bold;
+                            font-size: 12pt;
+                            text-decoration: underline;
+                            margin: 20px 0;
+                        }
+                        
+                        .work-unit {
+                            text-align: left;
+                            margin-bottom: 20px;
+                        }
+                        
+                        .main-table th {
+                            border: 1px solid black;
+                            padding: 6px;
+                            text-align: center;
+                            vertical-align: middle;
+                            font-size: 11pt;
+                            font-weight: normal;
+                        }
+                        
+                        .main-table .data-row td {
+                            border: 1px solid black;
+                            padding: 6px;
+                            text-align: center;
+                            vertical-align: middle;
+                            font-size: 11pt;
+                        }
+                        
+                        .main-table .name-column {
+                            text-align: left;
+                        }
+                        
+                        .main-table .signature-row td {
+                            border-left: 1px solid black;
+                            border-right: 1px solid black;
+                            border-top: none;
+                            border-bottom: none;
+                            padding: 10px;
+                            vertical-align: top;
+                            font-size: 11pt;
+                        }
+                        
+                        .main-table .pengeluaran-title-row td {
+                            border-left: 1px solid black;
+                            border-right: 1px solid black;
+                            border-top: 1px solid black;
+                            border-bottom: 1px solid black;
+                            padding: 8px;
+                            text-align: center;
+                            font-weight: normal;
+                            background-color: white;
+                        }
+                        
+                        .main-table .pengeluaran-content-row td {
+                            border-left: 1px solid black;
+                            border-right: 1px solid black;
+                            border-top: none;
+                            border-bottom: 1px solid black;
+                            padding: 15px;
+                            text-align: center;
+                            vertical-align: top;
+                            font-size: 11pt;
+                        }
+                        
+                        .note-kasubbag {
+                            margin-top: 10px;
+                            color: red;
+                            font-size: 10pt;
+                        }
+                    </style>
+                </head>
+                <body>
+                    ${cleanContent}
+                </body>
+                </html>
+            `;
+            
+            const blob = new Blob([wordDocument], {
+                type: 'application/msword'
+            });
+            
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'Surat_Permintaan_Barang_ATK_ARK_September_2025.doc';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(link.href);
+        }
+        
+        function printDocument() {
+            window.print();
+        }
+    </script>
+</body>
+</html>
